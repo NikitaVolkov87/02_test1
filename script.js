@@ -7,7 +7,17 @@ document.addEventListener("DOMContentLoaded",function() {
             console.log(formInputs[i].value);
             dataToSend[formInputs[i].name] = formInputs[i].value;
         }
-        sendAjax('processForm.php', dataToSend);
+        const promise = new Promise((resolve) => {
+            // resolve(sendAjax('processForm.php', dataToSend));
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("POST", '/processForm.php');
+            xmlhttp.setRequestHeader("Content-Type", "application/json");
+            xmlhttp.send(JSON.stringify(dataToSend));
+            xmlhttp.onload = () => {
+                resolve( JSON.parse( xmlhttp.response ));
+            };
+        });
+        promise.then( result => console.log('promise result is: ', result));
     });
 
     function sendAjax(url, data) {

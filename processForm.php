@@ -7,4 +7,5 @@ $resp = [
 ];
 
 header('Content-Type: application/json');
+sleep(3);
 echo json_encode($resp);
