@@ -11,8 +11,13 @@ document.addEventListener("DOMContentLoaded",function() {
             sendAjax('processForm.php', dataToSend, resolve);
         });
         promise.then( function(result) {
-            alert(result.body.name);
             console.log('promise result is: ', result);
+            return result;
+        }).then(function(r) {
+            console.log('2nd promise result is: ', r);
+            return r;
+        }).then(function (r) {
+            t1(r, 'test2');
         });
     });
 
@@ -24,5 +29,10 @@ document.addEventListener("DOMContentLoaded",function() {
         xmlhttp.onload = function() {
             resolve(JSON.parse(xmlhttp.response));
         };
+    }
+
+    function t1(i1, i2) {
+        console.log( 't1 -> ', i1);
+        console.log( 't1 -> ', i2);
     }
 });
